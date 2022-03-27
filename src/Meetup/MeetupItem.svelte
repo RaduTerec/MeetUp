@@ -1,15 +1,26 @@
+<script>
+  export let title;
+  export let subtitle;
+  export let imageUrl;
+  export let description;
+  export let address;
+  export let contactEmail;
+</script>
+
 <article>
   <header>
-    <div class="header-title">TITLE</div>
-    <div class="header-subtitle">SUBTITLE</div>
+    <div class="header-title">{title}</div>
+    <div class="header-subtitle">{subtitle}</div>
+    <p>{address}</p>
   </header>
   <div class="image">
-    <img src="" alt="" />
+    <img src="{imageUrl}" alt="{title}" />
   </div>
   <div class="content">
-    <p />
+    <p>{description}</p>
   </div>
   <footer>
+    <a href="mailto:{contactEmail}">Contact</a>
     <button>Show Details</button>
     <button>Favorite</button>
   </footer>
