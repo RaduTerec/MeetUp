@@ -21,7 +21,8 @@
       imageUrl:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Caffe_Nero_coffee_bar%2C_High_St%2C_Sutton%2C_Surrey%2C_Greater_London.JPG/800px-Caffe_Nero_coffee_bar%2C_High_St%2C_Sutton%2C_Surrey%2C_Greater_London.JPG",
       address: "27th Nerd Road, 32523 New York",
-      contactEmail: "code@test.com"
+      contactEmail: "code@test.com",
+      isFavorite: false,
     },
     {
       id: "m2",
@@ -31,7 +32,8 @@
       imageUrl:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Olympic_swimming_pool_%28Tbilisi%29.jpg/800px-Olympic_swimming_pool_%28Tbilisi%29.jpg",
       address: "27th Nerd Road, 32523 New York",
-      contactEmail: "swim@test.com"
+      contactEmail: "swim@test.com",
+      isFavorite: false,
     }
   ];
 
@@ -47,6 +49,17 @@
     };
    
     meetups = [newMeetup, ...meetups];
+  }
+
+  function toggleFavorite(event) {
+    const idtoupdate = event.detail;
+    const meetupToUpdate = {...meetups.find(m => m.id === idtoupdate)};
+    meetupToUpdate.isFavorite = !meetupToUpdate.isFavorite;
+
+    const meetupIndex = meetups.findIndex(m => m.id === idtoupdate);
+    const updatedMeetups = [...meetups];
+    updatedMeetups[meetupIndex] = meetupToUpdate;
+    meetups = updatedMeetups;
   }
 </script>
 
@@ -88,7 +101,7 @@
       on:input={event => (description = event.target.value)} />
     <Button type="submit" caption="Save" />
   </form>
-  <MeetupGrid {meetups} />
+  <MeetupGrid {meetups} on:togglefavorite="{toggleFavorite}" />
 </main>
 
 <style>
