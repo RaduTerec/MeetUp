@@ -37,9 +37,13 @@
     <p>{description}</p>
   </div>
   <footer>
-    <Button href="mailto:{contactEmail}" caption="Contact" />
-    <Button mode="outline" color="{isFavorite ? '' : 'success'}" type="button" caption="{isFavorite ? 'Unfave' : 'Fave'}" on:click={addToFavorite}/>
-    <Button type="button" caption="Show Details" />
+    <Button href="mailto:{contactEmail}">Contact</Button>
+    <Button mode="outline" type="button"
+      color="{isFavorite ? '' : 'success'}"
+      on:click={addToFavorite}>
+      {isFavorite ? 'Unfave' : 'Fave'}
+    </Button>
+    <Button type="button">Show Details</Button>
   </footer>
 </article>
 
