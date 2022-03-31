@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import Button from "../Ui/Button.svelte";
+  import Badge from "../UI/Badge.svelte";
 
   export let id;
   export let title;
@@ -20,7 +21,12 @@
 
 <article>
   <header>
-    <div class="header-title">{title}</div>
+    <div class="header-title">
+      {title}
+      {#if isFavorite}
+        <Badge>Favorite</Badge>
+      {/if}
+    </div>
     <div class="header-subtitle">{subtitle}</div>
     <p>{address}</p>
   </header>
