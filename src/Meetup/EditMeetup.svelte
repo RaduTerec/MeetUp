@@ -15,11 +15,14 @@
     let description = "";
     let imageUrl = "";
     let imageValidity = false;
+    let formIsValid = false;
 
     $: titleValidity = !isEmpty(title);
     $: subtitleValidity = !isEmpty(subtitle);
     $: emailValidity = isValidEmail(email);
     $: imageValidity = isValidUrl(imageUrl);
+    $: formIsValid = 
+        titleValidity && subtitleValidity && emailValidity && imageValidity;
 
     const dispatch = createEventDispatcher();
 
@@ -85,7 +88,7 @@
     </form>
     <div slot="footer">
         <Button type="button" mode="outline" on:click={cancel}>Cancel</Button>
-        <Button type="button" on:click={addMeetup}>Save</Button>
+        <Button type="button" on:click={addMeetup} disabled={!formIsValid}>Save</Button>
     </div>
 </Modal>
 
