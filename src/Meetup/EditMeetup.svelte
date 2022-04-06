@@ -6,21 +6,17 @@
     import {isEmpty, isValidEmail, isValidUrl} from "../shared/validation.js";
 
     let title = "";
-    let titleValidity = false;
     let subtitle = "";
-    let subtitleValidity = false;
     let address = "";
     let email = "";
-    let emailValidity = false;
     let description = "";
     let imageUrl = "";
-    let imageValidity = false;
-    let formIsValid = false;
 
     $: titleValidity = !isEmpty(title);
     $: subtitleValidity = !isEmpty(subtitle);
     $: emailValidity = isValidEmail(email);
     $: imageValidity = isValidUrl(imageUrl);
+    $: descriptionValidity = !isEmpty(description);
     $: formIsValid = 
         titleValidity && subtitleValidity && emailValidity && imageValidity;
 
@@ -38,7 +34,7 @@
     }
 
     function cancel() {
-      dispatch('close');
+      dispatch('cancel');
   }
 </script>
 
@@ -48,14 +44,14 @@
             id="title"
             label="Title"
             valid={titleValidity}
-            validityMessage="Please enter a non-empty title"
+            validityMessage="Title should not be empty"
             value={title}
             on:input={event => (title = event.target.value)} />
         <TextInput
             id="subtitle"
             label="Subtitle"
             valid={subtitleValidity}
-            validityMessage="Please enter a non-empty subtitle"
+            validityMessage="Subtitle should not be empty"
             value={subtitle}
             on:input={event => (subtitle = event.target.value)} />
         <TextInput
@@ -81,10 +77,11 @@
         <TextInput
             id="description"
             label="Description"
+            valid={descriptionValidity}
+            validityMessage="Description should not be empty"
             controlType="textarea"
             rows=3
-            value={description}
-            on:input={event => (description = event.target.value)} />
+            bind:value={description} />
     </form>
     <div slot="footer">
         <Button type="button" mode="outline" on:click={cancel}>Cancel</Button>
