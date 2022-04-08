@@ -1,9 +1,10 @@
 <script>
     import { createEventDispatcher } from "svelte";
+    import meetupStore from "../shared/meetupStore.js";
+    import {isEmpty, isValidEmail, isValidUrl} from "../shared/validation.js";
     import TextInput from "../UI/TextInput.svelte";
     import Button from "../UI/Button.svelte";
     import Modal from "../UI/Modal.svelte";
-    import {isEmpty, isValidEmail, isValidUrl} from "../shared/validation.js";
 
     let title = "";
     let subtitle = "";
@@ -23,14 +24,18 @@
     const dispatch = createEventDispatcher();
 
     function addMeetup() {
-        dispatch('addmeetup', {
+        const meetupData = {
             title: title,
             subtitle: subtitle,
-            address: address,
-            email: email,
             description: description,
             imageUrl: imageUrl,
-        });
+            contactEmail: email,
+            address: address,
+        };
+    
+        meetupStore.addMeetup(meetupData);
+        
+        dispatch('addmeetup');
     }
 
     function cancel() {

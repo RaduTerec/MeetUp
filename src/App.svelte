@@ -7,27 +7,12 @@
 
   let editMode = false;
 
-  function addMeetup(event) {
-    const meetupData = {
-      title: event.detail.title,
-      subtitle: event.detail.subtitle,
-      description: event.detail.description,
-      imageUrl: event.detail.imageUrl,
-      contactEmail: event.detail.email,
-      address: event.detail.address,
-    };
-   
-    meetupStore.addMeetup(meetupData);
+  function addMeetup() {
     editMode = false;
   }
 
   function closeModal() {
     editMode = false;
-  }
-
-  function toggleFavorite(event) {
-    const idtoupdate = event.detail;
-    meetupStore.toggleFavorite(idtoupdate);
   }
 </script>
 
@@ -40,7 +25,7 @@
   {#if editMode === true}
     <EditMeetup on:addmeetup={addMeetup} on:cancel={closeModal} />
   {/if}
-  <MeetupGrid meetups={$meetupStore} on:togglefavorite="{toggleFavorite}" />
+  <MeetupGrid meetups={$meetupStore} />
 </main>
 
 <style>

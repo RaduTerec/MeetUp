@@ -14,8 +14,7 @@
 			imageUrl={meetup.imageUrl}
 			address={meetup.address}
 			contactEmail={meetup.contactEmail}
-            isFavorite={meetup.isFavorite}
-            on:togglefavorite />
+            isFavorite={meetup.isFavorite} />
 	{/each}
 </section>
 
