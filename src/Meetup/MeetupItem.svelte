@@ -1,4 +1,5 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import meetupStore from "../shared/meetupStore.js";
   import Button from "../Ui/Button.svelte";
   import Badge from "../UI/Badge.svelte";
@@ -11,9 +12,15 @@
   export let address;
   export let contactEmail;
   export let isFavorite;
+
+  const dispatch = createEventDispatcher()
   
   function addToFavorite() {
     meetupStore.toggleFavorite(id);
+  }
+
+  function showDetails() {
+    dispatch("detail", id);
   }
 </script>
 
@@ -41,7 +48,7 @@
       on:click={addToFavorite}>
       {isFavorite ? 'Unfave' : 'Fave'}
     </Button>
-    <Button type="button">Show Details</Button>
+    <Button type="button" on:click={showDetails}>Show Details</Button>
   </footer>
 </article>
 
@@ -74,13 +81,6 @@
     font-size: 1.25rem;
     margin: 0.5rem 0;
     font-family: "Roboto Slab", sans-serif;
-  }
-
-  .header-title.is-favorite {
-    background: #01a129;
-    color: white;
-    padding: 0 0.5rem;
-    border-radius: 5px;
   }
 
   .header-subtitle {
