@@ -54,7 +54,12 @@
             meetupStore.create(meetupData);
         }
 
-        dispatch("create");
+        dispatch("save");
+    }
+
+    function remove() {
+        meetupStore.remove(id);
+        dispatch("save");
     }
 
     function cancel() {
@@ -114,10 +119,11 @@
         />
     </form>
     <div slot="footer">
-        <Button type="button" mode="outline" on:click={cancel}>Cancel</Button>
-        <Button type="button" on:click={submit} disabled={!formIsValid}>
-            Save
-        </Button>
+        <Button mode="outline" on:click={cancel}>Cancel</Button>
+        <Button on:click={submit} disabled={!formIsValid}>Save</Button>
+        {#if id != ""}
+            <Button on:click={remove}>Delete</Button>
+        {/if}
     </div>
 </Modal>
 

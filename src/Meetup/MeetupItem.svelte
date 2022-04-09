@@ -46,16 +46,15 @@
     <p>{description}</p>
   </div>
   <footer>
-    <Button mode="outline" type="button" on:click={editMeetup}>Edit</Button>
+    <Button mode="outline" on:click={editMeetup}>Edit</Button>
     <Button
       mode="outline"
-      type="button"
       color={isFavorite ? "" : "success"}
       on:click={addToFavorite}
     >
       {isFavorite ? "Unfave" : "Fave"}
     </Button>
-    <Button type="button" on:click={showDetails}>Show Details</Button>
+    <Button on:click={showDetails}>Show Details</Button>
   </footer>
 </article>
 

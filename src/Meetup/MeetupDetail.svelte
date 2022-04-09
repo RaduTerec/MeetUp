@@ -31,9 +31,7 @@
         <h2>{selectedMeetup.subtitle}</h2>
         <p>{selectedMeetup.description}</p>
         <Button href="mailto:{selectedMeetup.contactEmail}">Contact</Button>
-        <Button type="button" mode="outline" on:click={closeDetail}>
-            Close
-        </Button>
+        <Button mode="outline" on:click={closeDetail}>Close</Button>
     </div>
 </section>
 

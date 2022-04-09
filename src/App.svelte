@@ -42,7 +42,7 @@
     {#if editMode === true}
       <EditMeetup
         id={editedId}
-        on:create={exitEdit}
+        on:save={exitEdit}
         on:cancel={exitEdit}
       />
     {/if}
