@@ -5,18 +5,20 @@
 </script>
 
 <section id="meetups">
-	{#each meetups as meetup}
-		<MeetupItem
+    {#each meetups as meetup}
+        <MeetupItem
             id={meetup.id}
-			title={meetup.title}
-			subtitle={meetup.subtitle}
-			description={meetup.description}
-			imageUrl={meetup.imageUrl}
-			address={meetup.address}
-			contactEmail={meetup.contactEmail}
+            title={meetup.title}
+            subtitle={meetup.subtitle}
+            description={meetup.description}
+            imageUrl={meetup.imageUrl}
+            address={meetup.address}
+            contactEmail={meetup.contactEmail}
             isFavorite={meetup.isFavorite}
-            on:detail />
-	{/each}
+            on:detail
+            on:edit
+        />
+    {/each}
 </section>
 
 <style>

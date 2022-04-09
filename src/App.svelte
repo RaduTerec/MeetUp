@@ -6,17 +6,24 @@
   import Header from "./UI/Header.svelte";
   import Button from "./UI/Button.svelte";
 
-
   let editMode = false;
+  let editedId = "";
   let page = "main";
   let pageData = {};
 
-  function addMeetup() {
+  function saveMeetup() {
     editMode = false;
+    editedId = "";
   }
 
   function closeModal() {
     editMode = false;
+    editedId = "";
+  }
+
+  function editMeetup(event) {
+    editMode = true;
+    editedId = event.detail;
   }
 
   function selectMeetup(event) {
@@ -35,14 +42,22 @@
 <main>
   {#if page === "main"}
     <div class="meetup-controls">
-      <Button on:click="{() => (editMode = !editMode)}">New meetup</Button>
-    </div>  
+      <Button on:click={() => (editMode = !editMode)}>New meetup</Button>
+    </div>
     {#if editMode === true}
-      <EditMeetup on:addmeetup={addMeetup} on:cancel={closeModal} />
+      <EditMeetup
+        id={editedId}
+        on:addmeetup={saveMeetup}
+        on:cancel={closeModal}
+      />
     {/if}
-    <MeetupGrid meetups={$meetupStore} on:detail={selectMeetup} />
+    <MeetupGrid
+      meetups={$meetupStore}
+      on:detail={selectMeetup}
+      on:edit={editMeetup}
+    />
   {:else if page === "detail"}
-    <MeetupDetail id="{pageData.id}" on:close={closeSelectedMeetup} />
+    <MeetupDetail id={pageData.id} on:close={closeSelectedMeetup} />
   {/if}
 </main>
 

@@ -13,10 +13,14 @@
   export let contactEmail;
   export let isFavorite;
 
-  const dispatch = createEventDispatcher()
-  
+  const dispatch = createEventDispatcher();
+
   function addToFavorite() {
     meetupStore.toggleFavorite(id);
+  }
+
+  function editMeetup() {
+    dispatch("edit", id);
   }
 
   function showDetails() {
@@ -36,17 +40,20 @@
     <p>{address}</p>
   </header>
   <div class="image">
-    <img src="{imageUrl}" alt="{title}" />
+    <img src={imageUrl} alt={title} />
   </div>
   <div class="content">
     <p>{description}</p>
   </div>
   <footer>
-    <Button href="mailto:{contactEmail}">Contact</Button>
-    <Button mode="outline" type="button"
-      color="{isFavorite ? '' : 'success'}"
-      on:click={addToFavorite}>
-      {isFavorite ? 'Unfave' : 'Fave'}
+    <Button mode="outline" type="button" on:click={editMeetup}>Edit</Button>
+    <Button
+      mode="outline"
+      type="button"
+      color={isFavorite ? "" : "success"}
+      on:click={addToFavorite}
+    >
+      {isFavorite ? "Unfave" : "Fave"}
     </Button>
     <Button type="button" on:click={showDetails}>Show Details</Button>
   </footer>
