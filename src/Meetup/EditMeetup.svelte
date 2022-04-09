@@ -49,12 +49,12 @@
         };
 
         if (id != "") {
-            meetupStore.updateMeetup(id, meetupData);
+            meetupStore.update(id, meetupData);
         } else {
-            meetupStore.addMeetup(meetupData);
+            meetupStore.create(meetupData);
         }
 
-        dispatch("addmeetup");
+        dispatch("create");
     }
 
     function cancel() {

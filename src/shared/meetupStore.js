@@ -28,7 +28,7 @@ const meetupStore = writable([
 
 const customMeetupStore = {
   subscribe: meetupStore.subscribe,		// proxy the subscribe method
-  addMeetup: meetupData => {
+  create: meetupData => {
     const newMeetup = {
       ...meetupData,
       id: Math.random(),
@@ -39,7 +39,7 @@ const customMeetupStore = {
       return [newMeetup, ...items];
     });
   },
-  updateMeetup: (id, meetupData) => {
+  update: (id, meetupData) => {
     meetupStore.update(items => {
       const itemIndex = items.findIndex(i => i.id === id);
       const updatedItem = { ...items[itemIndex], ...meetupData }; // merge the key-value pairs of itemData with those of items[itemIndex]
@@ -48,7 +48,7 @@ const customMeetupStore = {
       return updatedItems;
     });
   },
-  removeMeetup: id => {			          // remove item from the meetups
+  remove: id => {			          // remove item from the meetups
     meetupStore.update(items => {
       return items.filter(i => i.id !== id);
     });

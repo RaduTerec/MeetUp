@@ -3,7 +3,6 @@
     import Button from "../UI/Button.svelte";
 
     export let title;
-
     const dispatcher = createEventDispatcher();
 
     function closeModal() {

@@ -3,14 +3,13 @@
     import meetupStore from "../shared/meetupStore.js";
     import Button from "../UI/Button.svelte";
 
-    export let id;
     let selectedMeetup;
+    export let id;
+    const dispatch = createEventDispatcher();
 
     const unsubscribe = meetupStore.subscribe((items) => {
         selectedMeetup = items.find((i) => i.id === id);
     });
-
-    const dispatch = createEventDispatcher();
 
     onDestroy(() => {
         if (unsubscribe) {

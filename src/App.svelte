@@ -11,12 +11,7 @@
   let page = "main";
   let pageData = {};
 
-  function saveMeetup() {
-    editMode = false;
-    editedId = "";
-  }
-
-  function closeModal() {
+  function exitEdit() {
     editMode = false;
     editedId = "";
   }
@@ -26,7 +21,7 @@
     editedId = event.detail;
   }
 
-  function selectMeetup(event) {
+  function showMeetupDetail(event) {
     page = "detail";
     pageData.id = event.detail;
   }
@@ -47,13 +42,13 @@
     {#if editMode === true}
       <EditMeetup
         id={editedId}
-        on:addmeetup={saveMeetup}
-        on:cancel={closeModal}
+        on:create={exitEdit}
+        on:cancel={exitEdit}
       />
     {/if}
     <MeetupGrid
       meetups={$meetupStore}
-      on:detail={selectMeetup}
+      on:detail={showMeetupDetail}
       on:edit={editMeetup}
     />
   {:else if page === "detail"}
