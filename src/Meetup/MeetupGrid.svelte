@@ -1,37 +1,37 @@
 <script>
-    import { createEventDispatcher } from "svelte";
-    import { fade } from "svelte/transition";
-    import { flip } from "svelte/animate";
-    import MeetupItem from "./MeetupItem.svelte";
-    import MeetupFilter from "./MeetupFilter.svelte";
-    import Button from "../ui/Button.svelte";
+   import { createEventDispatcher } from "svelte";
+   import { fade } from "svelte/transition";
+   import { flip } from "svelte/animate";
+   import MeetupItem from "./MeetupItem.svelte";
+   import MeetupFilter from "./MeetupFilter.svelte";
+   import Button from "../ui/Button.svelte";
 
-    let favsOnly = false;
-    const dispatch = createEventDispatcher();
+   let favsOnly = false;
+   const dispatch = createEventDispatcher();
 
-    export let meetups;
+   export let meetups;
 
-    $: filteredMeetups = favsOnly
-        ? meetups.filter((m) => m.isFavorite)
-        : meetups;
+   $: filteredMeetups = favsOnly
+      ? meetups.filter((m) => m.isFavorite)
+      : meetups;
 
-    function setFilter(event) {
-        favsOnly = event.detail === "favs";
-    }
+   function setFilter(event) {
+      favsOnly = event.detail === "favs";
+   }
 
-    function createMeetup() {
-        dispatch("add");
-    }
+   function createMeetup() {
+      dispatch("add");
+   }
 </script>
 
 <section id="meetup-controls">
-    <MeetupFilter on:select={setFilter} />
-    <Button on:click={createMeetup}>New Meetup</Button>
+   <MeetupFilter on:select={setFilter} />
+   <Button on:click={createMeetup}>New Meetup</Button>
 </section>
 <section id="meetups">
-    {#each filteredMeetups as meetup (meetup.id)}
+   {#each filteredMeetups as meetup (meetup.id)}
       <div transition:fade animate:flip={{ duration: 300 }}>
-        <MeetupItem
+         <MeetupItem
             id={meetup.id}
             title={meetup.title}
             subtitle={meetup.subtitle}
@@ -42,27 +42,27 @@
             isFavorite={meetup.isFavorite}
             on:detail
             on:edit
-        />
+         />
       </div>
-    {/each}
+   {/each}
 </section>
 
 <style>
-    #meetups {
-        width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
+   #meetups {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+   }
 
-    @media screen and (min-width: 768px) {
-        #meetups {
-            grid-template-columns: repeat (2, 1fr);
-        }
-    }
+   @media screen and (min-width: 768px) {
+      #meetups {
+         grid-template-columns: repeat (2, 1fr);
+      }
+   }
 
-    #meetup-controls {
-        margin: 1rem;
-        display: flex;
-        justify-content: space-between;
-    }
+   #meetup-controls {
+      margin: 1rem;
+      display: flex;
+      justify-content: space-between;
+   }
 </style>
