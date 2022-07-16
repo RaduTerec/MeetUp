@@ -33,7 +33,7 @@
                meetupsData.push({ id: key, ...data[key] });
             }
 
-            meetupStore.setMeetups(meetupsData);
+            meetupStore.setMeetups(meetupsData.reverse());
          })
          .catch((err) => {
             isLoading = false;

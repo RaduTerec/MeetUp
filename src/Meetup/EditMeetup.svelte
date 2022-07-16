@@ -49,7 +49,24 @@
       };
 
       if (id != "") {
-         meetupStore.update(id, meetupData);
+         fetch(
+            `https://meetupsvelte-default-rtdb.europe-west1.firebasedatabase.app/meetup/${id}.json`,
+            {
+               method: "PATCH",
+               body: JSON.stringify(meetupData),
+               headers: { "Content-Type": "application/json" },
+            }
+         )
+            .then((response) => {
+               if (!response.ok) {
+                  throw new Error("Could not post data. Try again!");
+               }
+
+               meetupStore.update(id, meetupData);
+            })
+            .catch((error) => {
+               console.log(error);
+            });
       } else {
          fetch(
             "https://meetupsvelte-default-rtdb.europe-west1.firebasedatabase.app/meetup.json",
@@ -72,20 +89,33 @@
                   isFavorite: false,
                   id: data.name,
                };
-               console.log(addedMeetup);
                meetupStore.create(addedMeetup);
             })
             .catch((error) => {
                console.log(error);
             });
-         meetupStore.create(meetupData);
       }
 
       dispatch("save");
    }
 
    function remove() {
-      meetupStore.remove(id);
+      fetch(
+         `https://meetupsvelte-default-rtdb.europe-west1.firebasedatabase.app/meetup/${id}.json`,
+         {
+            method: "DELETE",
+         }
+      )
+         .then((response) => {
+            if (!response.ok) {
+               throw new Error("Could not delete data. Try again!");
+            }
+
+            meetupStore.remove(id);
+         })
+         .catch((error) => {
+            console.log(error);
+         });
       dispatch("save");
    }
 
