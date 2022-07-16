@@ -5,6 +5,7 @@
    import EditMeetup from "./Meetup/EditMeetup.svelte";
    import MeetupDetail from "./Meetup/MeetupDetail.svelte";
    import Header from "./UI/Header.svelte";
+   import LoadingSpinner from "./UI/LoadingSpinner.svelte";
 
    let editMode = false;
    let isLoading = false;
@@ -68,14 +69,18 @@
       {#if editMode === true}
          <EditMeetup id={editedId} on:save={exitEdit} on:cancel={exitEdit} />
       {/if}
-      <MeetupGrid
-         meetups={$meetupStore}
-         on:detail={showMeetupDetail}
-         on:edit={editMeetup}
-         on:add={() => {
-            editMode = true;
-         }}
-      />
+      {#if isLoading}
+         <LoadingSpinner />
+      {:else}
+         <MeetupGrid
+            meetups={$meetupStore}
+            on:detail={showMeetupDetail}
+            on:edit={editMeetup}
+            on:add={() => {
+               editMode = true;
+            }}
+         />
+      {/if}
    {:else if page === "detail"}
       <MeetupDetail id={pageData.id} on:close={closeSelectedMeetup} />
    {/if}
