@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Modal from '../UI/Modal.svelte';
+	import Modal from '$lib/Ui/Modal.svelte';
 
 	export let message = '';
 </script>
