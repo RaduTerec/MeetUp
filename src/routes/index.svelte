@@ -1,12 +1,14 @@
-<script context="module">
+<script context="module" lang="ts">
+	import type { Meetup } from '$lib/shared/meetup.type';
+
 	export async function load({ fetch }) {
 		const url = `https://meetupsvelte-default-rtdb.europe-west1.firebasedatabase.app/meetup.json`;
 		const response = await fetch(url);
 		const data = await response.json();
 
-		const loadedMeetups = [];
+		const fetchedMeetups: Meetup[] = [];
 		for (const key in data) {
-			loadedMeetups.push({
+			fetchedMeetups.push({
 				...data[key],
 				id: key
 			});
@@ -14,33 +16,40 @@
 
 		return {
 			props: {
-				loadedMeetups
+				fetchedMeetups: fetchedMeetups
 			}
 		};
 	}
 </script>
 
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
+	import customMeetupStore from '$lib/stores/meetupStore';
 	import MeetupItem from '$lib/Meetup/MeetupItem.svelte';
 	import MeetupFilter from '$lib/Meetup/MeetupFilter.svelte';
 	import Button from '$lib/Ui/Button.svelte';
 
 	let favsOnly = false;
-	const dispatch = createEventDispatcher();
+	let loadedMeetups: Meetup[];
+	export let fetchedMeetups: Meetup[];
 
-	export let loadedMeetups: any[];
-
+	customMeetupStore.setMeetups(fetchedMeetups);
 	$: filteredMeetups = favsOnly ? loadedMeetups.filter((m) => m.isFavorite) : loadedMeetups;
+
+   let unsubscribe = customMeetupStore.subscribe((items) => {
+			loadedMeetups = items;
+		});
+
+	onDestroy(() => {
+		if (unsubscribe) {
+			unsubscribe();
+		}
+	});
 
 	function setFilter(event: { detail: string }) {
 		favsOnly = event.detail === 'favs';
-	}
-
-	function createMeetup() {
-		dispatch('add');
 	}
 </script>
 
@@ -50,7 +59,7 @@
 
 <section id="meetup-controls">
 	<MeetupFilter on:select={setFilter} />
-	<Button on:click={createMeetup}>New Meetup</Button>
+	<Button on:click={() => console.log('new meetup')}>New Meetup</Button>
 </section>
 {#if filteredMeetups.length === 0}
 	<p id="no-meetups">No meetups found, you can start adding some.</p>

@@ -30,7 +30,7 @@ const customMeetupStore = {
    toggleFavorite: (id: string) => {
       meetupStore.update(items => {
          const meetupIndex = items.findIndex(i => i.id === id);
-         items[meetupIndex].isFavorite = items[meetupIndex].isFavorite;
+         items[meetupIndex].isFavorite = !items[meetupIndex].isFavorite;
          const newitems = items;
          return newitems;
       })
