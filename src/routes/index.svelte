@@ -1,31 +1,8 @@
-<script context="module" lang="ts">
-	import type { Meetup } from '$lib/shared/meetup.type';
-
-	export async function load({ fetch }) {
-		const url = `https://meetupsvelte-default-rtdb.europe-west1.firebasedatabase.app/meetup.json`;
-		const response = await fetch(url);
-		const data = await response.json();
-
-		const fetchedMeetups: Meetup[] = [];
-		for (const key in data) {
-			fetchedMeetups.push({
-				...data[key],
-				id: key
-			});
-		}
-
-		return {
-			props: {
-				fetchedMeetups: fetchedMeetups
-			}
-		};
-	}
-</script>
-
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
+   import type { Meetup } from '$lib/shared/meetup.type';
 	import customMeetupStore from '$lib/stores/meetupStore';
 	import MeetupItem from '$lib/Meetup/MeetupItem.svelte';
 	import MeetupFilter from '$lib/Meetup/MeetupFilter.svelte';
