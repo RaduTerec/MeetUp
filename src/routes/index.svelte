@@ -3,11 +3,11 @@
 	import { fade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import type { Meetup } from '$lib/shared/meetup.type';
+   import Button from '$lib/Ui/Button.svelte';
 	import customMeetupStore from '$lib/stores/meetupStore';
 	import EditMeetup from '$lib/Meetup/EditMeetup.svelte';
 	import MeetupItem from '$lib/Meetup/MeetupItem.svelte';
 	import MeetupFilter from '$lib/Meetup/MeetupFilter.svelte';
-	import Button from '$lib/Ui/Button.svelte';
 
 	export let fetchedMeetups: Meetup[];
 
@@ -66,7 +66,7 @@
 <section id="meetups">
 	{#each filteredMeetups as meetup (meetup.id)}
 		<div transition:fade animate:flip={{ duration: 300 }}>
-			<MeetupItem item={meetup} on:detail on:edit={editMeetup} />
+			<MeetupItem item={meetup} on:edit={editMeetup} />
 		</div>
 	{/each}
 </section>

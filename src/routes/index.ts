@@ -27,7 +27,7 @@ export const GET: RequestHandler = async () => {
 
       return {
          body: {
-            fetchedMeetups: fetchedMeetups
+            fetchedMeetups: fetchedMeetups.reverse()
          }
       };
    }

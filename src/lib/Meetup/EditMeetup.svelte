@@ -125,10 +125,6 @@
 		subtitle = ((event as CustomEvent).target as HTMLInputElement).value;
 	}
 
-	function setDescription(event: Event) {
-		description = ((event as CustomEvent).target as HTMLInputElement).value;
-	}
-
 	function setEmail(event: Event) {
 		email = ((event as CustomEvent).target as HTMLInputElement).value;
 	}
@@ -160,12 +156,7 @@
 			value={subtitle}
 			on:input={setSubtitle}
 		/>
-		<TextInput
-			id="address"
-			label="Address"
-			value={address}
-			on:input={setAddress}
-		/>
+		<TextInput id="address" label="Address" value={address} on:input={setAddress} />
 		<TextInput
 			id="imageUrl"
 			label="Image URL"

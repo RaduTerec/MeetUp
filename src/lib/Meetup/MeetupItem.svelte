@@ -33,10 +33,6 @@
 	function editMeetup() {
 		dispatch('edit', item.id);
 	}
-
-	function showDetails() {
-		dispatch('detail', item.id);
-	}
 </script>
 
 <article>
@@ -61,7 +57,7 @@
 		<Button mode="outline" color={item.isFavorite ? '' : 'success'} on:click={toggleFavorite}>
 			{item.isFavorite ? 'Unfave' : 'Fave'}
 		</Button>
-		<Button on:click={showDetails}>Show Details</Button>
+		<Button href="/meetup/{item.id}">Show Details</Button>
 	</footer>
 </article>
 
