@@ -2,22 +2,26 @@
 	import { onDestroy } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
-   import type { Meetup } from '$lib/shared/meetup.type';
+	import type { Meetup } from '$lib/shared/meetup.type';
 	import customMeetupStore from '$lib/stores/meetupStore';
+	import EditMeetup from '$lib/Meetup/EditMeetup.svelte';
 	import MeetupItem from '$lib/Meetup/MeetupItem.svelte';
 	import MeetupFilter from '$lib/Meetup/MeetupFilter.svelte';
 	import Button from '$lib/Ui/Button.svelte';
 
+	export let fetchedMeetups: Meetup[];
+
 	let favsOnly = false;
 	let loadedMeetups: Meetup[];
-	export let fetchedMeetups: Meetup[];
+	let editMode = false;
+	let editedId = '';
 
 	customMeetupStore.setMeetups(fetchedMeetups);
 	$: filteredMeetups = favsOnly ? loadedMeetups.filter((m) => m.isFavorite) : loadedMeetups;
 
-   let unsubscribe = customMeetupStore.subscribe((items) => {
-			loadedMeetups = items;
-		});
+	let unsubscribe = customMeetupStore.subscribe((items) => {
+		loadedMeetups = items;
+	});
 
 	onDestroy(() => {
 		if (unsubscribe) {
@@ -28,15 +32,33 @@
 	function setFilter(event: { detail: string }) {
 		favsOnly = event.detail === 'favs';
 	}
+
+	function exitEdit() {
+		editMode = false;
+		editedId = '';
+	}
+
+	function editMeetup(event: { detail: string }) {
+		editMode = true;
+		editedId = event.detail;
+	}
+
+	function addMeetup() {
+		editMode = true;
+	}
 </script>
 
 <svelte:head>
 	<title>Meet Us</title>
 </svelte:head>
 
+{#if editMode === true}
+	<EditMeetup id={editedId} on:save={exitEdit} on:cancel={exitEdit} />
+{/if}
+
 <section id="meetup-controls">
 	<MeetupFilter on:select={setFilter} />
-	<Button on:click={() => console.log('new meetup')}>New Meetup</Button>
+	<Button on:click={addMeetup}>New Meetup</Button>
 </section>
 {#if filteredMeetups.length === 0}
 	<p id="no-meetups">No meetups found, you can start adding some.</p>
@@ -44,7 +66,7 @@
 <section id="meetups">
 	{#each filteredMeetups as meetup (meetup.id)}
 		<div transition:fade animate:flip={{ duration: 300 }}>
-			<MeetupItem item={meetup} on:detail on:edit />
+			<MeetupItem item={meetup} on:detail on:edit={editMeetup} />
 		</div>
 	{/each}
 </section>
